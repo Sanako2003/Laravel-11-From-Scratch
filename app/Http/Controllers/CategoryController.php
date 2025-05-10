@@ -12,9 +12,15 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all(); 
- 
-        return view('categories.index', compact('categories'));
+        try {
+            $categories = Category::all();
+            if ($categories->isEmpty()) {
+                return view('categories.index', ['categories' => collect([])]);
+            }
+            return view('categories.index', compact('categories'));
+        } catch (\Exception $e) {
+            return view('categories.index', ['categories' => collect([])]);
+        }
     }
 
     /**

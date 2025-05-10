@@ -19,9 +19,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($categories as $category)
+                            @forelse($categories as $category)
                                 <tr>
-                                    <td>{{ $category->name }}</td>
+                                    <td>{{ $category->name ?? 'N/A' }}</td>
                                     <td style="color:blue;margin-right: 10px;">
                                         <a href="{{ route('categories.edit', $category) }}">Edit</a>
                                     </td>
@@ -30,10 +30,14 @@
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" onclick="return confirm('Are you sure?')">Delete</button>
+                                        </form>
                                     </td>
-                                  
                                 </tr>
-                            @endforeach
+                            @empty
+                                <tr>
+                                    <td colspan="3">No categories found</td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
